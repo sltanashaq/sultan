@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import userRoute from "./routes/users.js";
+import userRoute from "./routes/Users.js";
 import messageRoute from "./routes/messages.js";
 import conversationRoute from "./routes/conversations.js";
 import transactionRoute from "./routes/transactions.js";
