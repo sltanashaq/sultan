@@ -8,13 +8,13 @@ import conversationRoute from "./routes/conversations.js";
 import transactionRoute from "./routes/transactions.js";
 
 const app = express();
-
-app.use(cors());
-app.use(express.json());
 // 'mongodb://localhost:27017/myapp'
 // "mongodb://sltan:113344662255@ac-nbctcvc-shard-00-00.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-01.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-02.5w13s16.mongodb.net:27017/?ssl=true&replicaSet=atlas-11w4ws-shard-0&authSource=admin&retryWrites=true&w=majority";
 // "mongodb://sltan:113344662255@cluster0.5w13s16.mongodb.net/?appName=Cluster0";
-mongoose.connect("mongodb://sultan:0994119422@ac-nbctcvc-shard-00-00.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-01.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-02.5w13s16.mongodb.net:27017/?ssl=true&replicaSet=atlas-11w4ws-shard-0&authSource=admin&appName=Cluster0")
+
+app.use(cors());
+app.use(express.json());
+mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("MongoDB Connected"))
 .catch((err) => console.log(err));
 
@@ -27,8 +27,10 @@ app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
-app.listen(3636, () => {
-  console.log("Server running on port 3636");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
  
  
