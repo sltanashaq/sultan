@@ -11,14 +11,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-// 'mongodb://localhost:27017/myapp'
-// "mongodb://sltan:113344662255@ac-nbctcvc-shard-00-00.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-01.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-02.5w13s16.mongodb.net:27017/?ssl=true&replicaSet=atlas-11w4ws-shard-0&authSource=admin&retryWrites=true&w=majority";
-// "mongodb://sltan:113344662255@cluster0.5w13s16.mongodb.net/?appName=Cluster0";
-mongoose.connect("mongodb://sultan:0994119422@ac-nbctcvc-shard-00-00.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-01.5w13s16.mongodb.net:27017,ac-nbctcvc-shard-00-02.5w13s16.mongodb.net:27017/?ssl=true&replicaSet=atlas-11w4ws-shard-0&authSource=admin&appName=Cluster0")
-.then(() => console.log("MongoDB Connected"))
-.catch((err) => console.log(err));
 
-app.use("/users", userRoute); 
+// MongoDB (من Render Environment Variables)
+mongoose.connect(process.env.MONGO_URL)
+.then(() => console.log("MongoDB Connected"))
+.catch((err) => console.log("MongoDB Error:", err));
+
+app.use("/users", userRoute);
 app.use("/messages", messageRoute);
 app.use("/conversations", conversationRoute);
 app.use("/transactions", transactionRoute);
@@ -27,10 +26,12 @@ app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
-app.listen(3636, () => {
-  console.log("Server running on port 3636");
+// Render port fix
+const PORT = process.env.PORT || 3636;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
- 
  
 
 // import express from 'express';
